@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="SHYNGROUP — IT-компания. Разработка интернет-магазинов и веб-систем под ключ: e-commerce, CRM/ERP, автоматизация." />
+  <title>SHYNGROUP — Разработка интернет-магазинов и веб-систем</title>
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --surface:#ffffff;
+      --alt:#f6f8fb;
+      --text:#0b1220;
+      --muted:#55647a;
+      --line:rgba(11,18,32,.10);
+      --shadow:0 18px 50px rgba(11,18,32,.10);
+      --shadow2:0 10px 26px rgba(11,18,32,.10);
+      --accent:#1e90ff;
+
+      --ease:cubic-bezier(.2,.8,.2,1);
+      --maxMobile:420px; /* force mobile look */
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:var(--bg);
+      color:var(--text);
+      letter-spacing:-0.01em;
+      line-height:1.45;
+
+      max-width:var(--maxMobile);
+      margin:0 auto;
+      min-height:100vh;
+      border-left:1px solid var(--line);
+      border-right:1px solid var(--line);
+    }
+
+    a{color:inherit;text-decoration:none}
+    button,input,textarea{font-family:inherit}
+    ::selection{background:rgba(30,144,255,.18)}
+
+    .wrap{padding:0 16px}
+    .divider{height:1px;background:var(--line)}
+    section{padding:56px 0}
+    .alt{background:var(--alt)}
+    h1,h2,h3{margin:0; letter-spacing:-0.03em}
+    h1{font-size:34px; line-height:1.08}
+    h2{font-size:22px; line-height:1.18}
+    h3{font-size:15px; line-height:1.25}
+    .lead{margin:12px 0 0; color:var(--muted); font-size:15px}
+    .muted{color:var(--muted)}
+
+    /* Floating brand bar (no header section) */
+    .topbar{
+      position:fixed;
+      top:12px;
+      left:50%;
+      transform:translateX(-50%);
+      width:min(var(--maxMobile), 100%);
+      z-index:60;
+      padding:0 12px;
+      pointer-events:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .topbar > *{pointer-events:auto}
+
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.74);
+      backdrop-filter:saturate(180%) blur(12px);
+      box-shadow:0 12px 30px rgba(11,18,32,.10);
+      max-width:calc(100% - 58px);
+      overflow:hidden;
+    }
+    .dot{
+      width:12px;height:12px;border-radius:999px;background:var(--accent);
+      box-shadow:0 12px 28px rgba(30,144,255,.22);
+      flex:0 0 12px;
+    }
+    .brand .t{min-width:0}
+    .brand b{
+      display:block;
+      font-size:13px;
+      letter-spacing:.10em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .brand span{
+      display:block;
+      font-size:11px;
+      color:var(--muted);
+      margin-top:2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .fab{
+      width:46px;height:46px;
+      display:grid;place-items:center;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.74);
+      backdrop-filter:saturate(180%) blur(12px);
+      box-shadow:0 12px 30px rgba(11,18,32,.10);
+      cursor:pointer;
+      transition:transform .18s var(--ease), background .18s var(--ease);
+    }
+    .fab:hover{background:rgba(30,144,255,.08)}
+    .fab:active{transform:translateY(1px)}
+    .fab svg{width:18px;height:18px}
+
+    /* Language switcher */
+    .lang{
+      position:fixed;
+      top:70px;
+      left:50%;
+      transform:translateX(-50%);
+      width:min(var(--maxMobile), 100%);
+      z-index:55;
+      padding:0 12px;
+      pointer-events:none;
+      display:flex;
+      justify-content:flex-end;
+    }
+    .lang > *{pointer-events:auto}
+
+    .seg{
+      display:inline-flex;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.74);
+      backdrop-filter:saturate(180%) blur(12px);
+      box-shadow:0 10px 24px rgba(11,18,32,.08);
+      overflow:hidden;
+    }
+    .seg button{
+      border:0;
+      background:transparent;
+      padding:10px 12px;
+      font-weight:800;
+      font-size:12px;
+      color:var(--muted);
+      cursor:pointer;
+      transition:background .18s var(--ease), color .18s var(--ease);
+      min-width:52px;
+    }
+    .seg button:hover{background:rgba(30,144,255,.06); color:var(--text)}
+    .seg button.active{
+      background:rgba(30,144,255,.12);
+      color:var(--text);
+    }
+
+    /* HERO */
+    .hero{
+      padding-top:132px; /* room for topbar + language switch */
+      padding-bottom:44px;
+      position:relative;
+      overflow:hidden;
+    }
+    .heroGlow{
+      position:absolute;
+      inset:-140px -120px auto -120px;
+      height:520px;
+      background:
+        radial-gradient(closest-side, rgba(30,144,255,.16), transparent 68%),
+        radial-gradient(closest-side, rgba(30,144,255,.08), transparent 66%);
+      pointer-events:none;
+      filter:saturate(120%);
+    }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.78);
+      backdrop-filter:saturate(180%) blur(10px);
+      box-shadow:0 10px 28px rgba(11,18,32,.06);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .pill svg{width:16px;height:16px;color:var(--accent)}
+
+    .btns{display:grid; gap:10px; margin-top:18px}
+    .btn{
+      width:100%;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:transparent;
+      color:var(--text);
+      cursor:pointer;
+      font-weight:800;
+      transition:transform .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease), opacity .18s var(--ease);
+    }
+    .btn:hover{background:rgba(30,144,255,.06)}
+    .btn:active{transform:translateY(1px)}
+    .btnPrimary{
+      background:var(--accent);
+      border-color:rgba(30,144,255,.40);
+      color:#fff;
+      box-shadow:0 16px 38px rgba(30,144,255,.20);
+    }
+    .btnPrimary:hover{opacity:.96}
+
+    /* Base grid + cards */
+    .grid{display:grid; gap:12px; margin-top:14px}
+    .card{
+      border:1px solid var(--line);
+      background:var(--surface);
+      border-radius:20px;
+      box-shadow:var(--shadow2);
+      padding:16px;
+    }
+    .card p{margin:8px 0 0; color:var(--muted); font-size:14px}
+    .hintRow{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:12px 12px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(30,144,255,.03);
+      margin-top:14px;
+    }
+    .hintRow svg{width:18px;height:18px; flex:0 0 18px; margin-top:1px; color:var(--accent)}
+    .hintRow span{font-size:14px; color:var(--muted)}
+
+    /* SERVICES - premium */
+    .serviceCard{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:22px;
+      box-shadow:0 12px 28px rgba(11,18,32,.08);
+      padding:20px;
+      transition:transform .25s var(--ease), box-shadow .25s var(--ease);
+    }
+    .serviceCard:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 38px rgba(11,18,32,.12);
+    }
+    .serviceIcon{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:rgba(30,144,255,.10);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:14px;
+      font-size:20px;
+    }
+    .serviceCard h3{
+      font-size:16px;
+      margin-bottom:6px;
+      letter-spacing:-0.02em;
+    }
+    .serviceCard p{
+      font-size:14px;
+      color:var(--muted);
+      margin:0;
+    }
+
+    /* CASES BIG + FULL SQUARE LOGOS */
+    .case{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .logoSquare{
+      width:96px;
+      height:96px;
+      border-radius:22px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:0 10px 22px rgba(11,18,32,.10);
+      overflow:hidden;
+      flex:0 0 96px;
+    }
+    .logoSquare img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+      object-position:center;
+    }
+    .caseTxt{min-width:0}
+    .caseTxt h3{font-size:17px; line-height:1.15; letter-spacing:-0.02em}
+    .caseTxt p{margin:8px 0 0; font-size:14px}
+
+    /* Footer */
+    footer{
+      padding:34px 0;
+      border-top:1px solid var(--line);
+      background:#fff;
+    }
+    .chips{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+    .chip{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      color:var(--muted);
+      background:rgba(30,144,255,.03);
+      cursor:pointer;
+      user-select:none;
+    }
+    .chip svg{width:18px;height:18px}
+    .chip:active{transform:translateY(1px)}
+    .contactLine{
+      margin-top:10px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    /* Modal */
+    .backdrop{
+      position:fixed; inset:0; z-index:80;
+      display:none;
+      background:rgba(0,0,0,.45);
+      backdrop-filter:saturate(160%) blur(10px);
+      padding:14px;
+      overflow:auto;
+    }
+    .modal{
+      max-width:420px;
+      margin:76px auto;
+      border-radius:22px;
+      border:1px solid var(--line);
+      background:var(--surface);
+      box-shadow:0 30px 80px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+    .modalHead{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:16px 16px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(30,144,255,.07), transparent 70%);
+    }
+    .close{
+      width:40px; height:40px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:transparent;
+      color:var(--text);
+      cursor:pointer;
+      display:grid; place-items:center;
+    }
+    .modalBody{padding:16px}
+    form{display:grid; gap:12px}
+    .field{display:grid; gap:6px}
+    label{font-size:12px; color:var(--muted)}
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      color:var(--text);
+      outline:none;
+      transition:box-shadow .18s var(--ease), border-color .18s var(--ease);
+    }
+    input:focus, textarea:focus{
+      border-color:rgba(30,144,255,.55);
+      box-shadow:0 0 0 6px rgba(30,144,255,.18);
+    }
+    textarea{min-height:96px; resize:vertical}
+    .hint{font-size:12px; color:var(--muted)}
+    .error{display:none; font-size:12px; color:#d64545}
+    .actions{display:flex; gap:10px; padding-top:6px}
+    .actions .btn{width:100%}
+
+    /* Toast */
+    .toasts{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:14px;
+      z-index:120;
+      display:grid;
+      gap:10px;
+      width:min(var(--maxMobile), 100%);
+      padding:0 14px;
+      pointer-events:none;
+    }
+    .toast{
+      pointer-events:auto;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:var(--surface);
+      box-shadow:var(--shadow2);
+      padding:12px 12px;
+      display:flex; gap:10px; align-items:flex-start;
+      animation:toastIn .28s var(--ease) both;
+    }
+    @keyframes toastIn{
+      from{opacity:0; transform:translateY(10px)}
+      to{opacity:1; transform:translateY(0)}
+    }
+    .toast .ic{
+      width:34px; height:34px;
+      border-radius:16px;
+      background:rgba(30,144,255,.10);
+      border:1px solid var(--line);
+      display:grid; place-items:center;
+      flex:0 0 34px;
+      color:var(--accent);
+    }
+    .toast b{display:block; font-size:14px}
+    .toast p{margin:2px 0 0; color:var(--muted); font-size:13px}
+
+    /* Reveal */
+    .reveal{opacity:0; transform:translateY(12px); transition:opacity .65s var(--ease), transform .65s var(--ease)}
+    .reveal.in{opacity:1; transform:translateY(0)}
+  </style>
+</head>
+
+<body>
+  <div class="topbar" aria-label="SHYNGROUP">
+    <div class="brand">
+      <div class="dot" aria-hidden="true"></div>
+      <div class="t">
+        <b>SHYNGROUP</b>
+        <span id="brandSubtitle">IT-компания • e-commerce • web systems</span>
+      </div>
+    </div>
+
+    <button class="fab" type="button" aria-label="Обсудить проект" data-open-modal>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M8 9h8M8 13h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Language toggle -->
+  <div class="lang" aria-label="Language">
+    <div class="seg" role="tablist" aria-label="Language switcher">
+      <button type="button" data-lang="ru" class="active" role="tab" aria-selected="true">RU</button>
+      <button type="button" data-lang="kz" role="tab" aria-selected="false">KZ</button>
+      <button type="button" data-lang="en" role="tab" aria-selected="false">EN</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="heroGlow" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="reveal">
+        <span class="pill" id="pillText">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+          Выпускники SDU • опыт 4+ лет
+        </span>
+
+        <h1 id="heroTitle" style="margin-top:14px">Интернет-магазины и веб-системы под ключ</h1>
+        <p class="lead" id="heroLead">Коротко: погружаемся в бизнес → делаем ТЗ → дизайн → разработка.</p>
+
+        <div class="btns">
+          <button class="btn btnPrimary" type="button" data-open-modal data-prefill="project" id="btnDiscuss">Обсудить проект</button>
+          <button class="btn" type="button" data-open-modal data-prefill="consult" id="btnConsult">Получить консультацию</button>
+        </div>
+
+        <div class="hintRow" aria-label="Процесс">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 19V5m0 14h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 14l3-3 3 2 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span id="heroHint">Сначала обсуждаем боли и решение. Затем ТЗ. После — дизайн и разработка.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section class="alt" id="about">
+    <div class="wrap">
+      <div class="reveal">
+        <h2 id="aboutTitle">О компании</h2>
+        <p class="lead" id="aboutLead">SHYNGROUP — IT-компания. Делаем e-commerce и сложные системы: CRM/ERP и автоматизацию.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="wrap">
+      <div class="reveal">
+        <h2 id="processTitle">Процесс</h2>
+        <div class="grid">
+          <div class="card"><h3 id="p1t">1) Аналитика</h3><p id="p1d">Боли → цели → решения</p></div>
+          <div class="card"><h3 id="p2t">2) ТЗ</h3><p id="p2d">Архитектура • функционал • бизнес-логика</p></div>
+          <div class="card"><h3 id="p3t">3) UX/UI</h3><p id="p3d">Прототип • современный интерфейс • mobile-first</p></div>
+          <div class="card"><h3 id="p4t">4) Разработка</h3><p id="p4d">Backend + Frontend • интеграции • тестирование • деплой</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SERVICES -->
+  <section class="alt" id="services">
+    <div class="wrap">
+      <div class="reveal">
+        <h2 id="servicesTitle">Услуги</h2>
+        <p class="lead" id="servicesLead">Разрабатываем цифровые продукты для роста бизнеса.</p>
+
+        <div class="grid">
+          <div class="serviceCard">
+            <div class="serviceIcon">🛒</div>
+            <h3 id="s1t">Интернет-магазины</h3>
+            <p id="s1d">Каталог • корзина • онлайн-оплата • админ-панель</p>
+          </div>
+
+          <div class="serviceCard">
+            <div class="serviceIcon">📊</div>
+            <h3 id="s2t">CRM системы</h3>
+            <p id="s2d">Продажи • сервис • управление лидами</p>
+          </div>
+
+          <div class="serviceCard">
+            <div class="serviceIcon">⚙️</div>
+            <h3 id="s3t">ERP решения</h3>
+            <p id="s3d">Финансы • роли • документы • аналитика</p>
+          </div>
+
+          <div class="serviceCard">
+            <div class="serviceIcon">🔄</div>
+            <h3 id="s4t">Автоматизация процессов</h3>
+            <p id="s4d">Визы • логистика • госзакупки • интеграции</p>
+          </div>
+
+          <div class="serviceCard">
+            <div class="serviceIcon">🎓</div>
+            <h3 id="s5t">Образовательные платформы</h3>
+            <p id="s5d">LMS • кабинеты • тестирование • контент</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CASES -->
+  <section id="cases">
+    <div class="wrap">
+      <div class="reveal">
+        <h2 id="casesTitle">Кейсы</h2>
+        <p class="lead" id="casesLead">Крупные карточки + логотип заполняет квадрат целиком.</p>
+
+        <div class="grid">
+          <div class="card">
+            <div class="case">
+              <div class="logoSquare"><img src="atlaslogo.png" alt="Atlas Tourism logo" loading="lazy" /></div>
+              <div class="caseTxt">
+                <h3>Atlas Tourism</h3>
+                <p class="lead" id="c1d">3 проекта • своя CRM • автоматизация виз • CRM для сервис-менеджеров</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="case">
+              <div class="logoSquare"><img src="kitapallogo.png" alt="KitapAl logo" loading="lazy" /></div>
+              <div class="caseTxt">
+                <h3>KitapAl</h3>
+                <p class="lead" id="c2d">Web-платформа</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="case">
+              <div class="logoSquare"><img src="snlogo.webp" alt="Sebepti-nukte logo" loading="lazy" /></div>
+              <div class="caseTxt">
+                <h3>Sebepti-nukte</h3>
+                <p class="lead" id="c3d">EdTech / контент</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="case">
+              <div class="logoSquare"><img src="kitelogo.png" alt="Kite Travel ERP logo" loading="lazy" /></div>
+              <div class="caseTxt">
+                <h3>Kite Travel ERP</h3>
+                <p class="lead" id="c4d">ERP system</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="case">
+              <div class="logoSquare"><img src="goslogo.png" alt="Automation logo" loading="lazy" /></div>
+              <div class="caseTxt">
+                <h3 id="c5t">Автоматизация логистики и госзакупок</h3>
+                <p class="lead" id="c5d">Процессы • интеграции • отчеты</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="case">
+              <div class="logoSquare"><img src="educationlogo.png" alt="Education platforms logo" loading="lazy" /></div>
+              <div class="caseTxt">
+                <h3 id="c6t">Образовательные платформы</h3>
+                <p class="lead" id="c6d">LMS • кабинеты • курсы</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- +50 projects -->
+        <div style="margin-top:28px; text-align:center;">
+          <div style="font-size:28px; font-weight:800; letter-spacing:-0.02em; margin-bottom:6px;" id="plus50">+50</div>
+          <div class="muted" style="font-size:14px;" id="plus50Text">ещё реализованных проектов в разных нишах</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRICING -->
+  <section class="alt" id="pricing">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="card" style="box-shadow:var(--shadow); padding:18px">
+          <h2 id="pricingTitle">Стоимость и сроки</h2>
+          <p class="lead" id="pricingLead">Обсуждаются индивидуально после аналитики и формирования ТЗ.</p>
+          <div class="btns" style="margin-top:14px">
+            <button class="btn btnPrimary" type="button" data-open-modal data-prefill="project" id="btnMeet">Запланировать встречу</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <b style="letter-spacing:.10em">SHYNGROUP</b>
+      <div class="contactLine" id="footerLine">
+        WhatsApp: <b>+7 747 989 4879</b>
+      </div>
+
+      <div class="chips">
+        <a class="chip" id="waLinkFooter" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6.5 10.5c1.8 3.7 3.3 5.2 7 7l2.2-2.2c.3-.3.8-.4 1.2-.2l3.2 1.3c.5.2.8.8.6 1.3l-.8 2.4c-.2.5-.7.8-1.2.8C10 22 2 14 2 4.3c0-.5.3-1 .8-1.2l2.4-.8c.5-.2 1.1.1 1.3.6l1.3 3.2c.2.4.1.9-.2 1.2L6.5 10.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+          <span id="waLabel">WhatsApp</span>
+        </a>
+
+        <a class="chip" href="mailto:shyngroup@example.com">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M4 8l8 5 8-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <span id="emailLabel">Email</span>
+        </a>
+
+        <a class="chip" href="https://instagram.com/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 22h10a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5H7a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5z" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M16 11.5a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M17.5 6.5h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span id="igLabel">Instagram</span>
+        </a>
+      </div>
+
+      <p class="muted" style="margin:12px 0 0; font-size:12px">© <span id="year"></span> SHYNGROUP</p>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document" aria-label="Обсудить проект">
+      <div class="modalHead">
+        <h3 id="modalTitle">Обсудить проект</h3>
+        <button class="close" type="button" id="closeBtn" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" style="width:18px;height:18px">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modalBody">
+        <form id="leadForm" novalidate>
+          <div class="field">
+            <label for="name" id="lblName">Имя *</label>
+            <input id="name" name="name" type="text" placeholder="Ваше имя" autocomplete="name" required />
+            <div class="error" data-err="name" id="errName">Укажите имя.</div>
+          </div>
+
+          <div class="field">
+            <label for="phone" id="lblPhone">Телефон *</label>
+            <input id="phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" required />
+            <div class="error" data-err="phone" id="errPhone">Укажите телефон.</div>
+          </div>
+
+          <div class="field">
+            <label for="company" id="lblCompany">Компания</label>
+            <input id="company" name="company" type="text" placeholder="Название (опционально)" autocomplete="organization" />
+          </div>
+
+          <div class="field">
+            <label for="message" id="lblMsg">Сообщение *</label>
+            <textarea id="message" name="message" placeholder="Коротко о задаче" required></textarea>
+            <div class="error" data-err="message" id="errMsg">Добавьте описание.</div>
+            <div class="hint" id="modalHint">После отправки откроется WhatsApp — данные будут вставлены автоматически.</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn" type="button" id="cancelBtn">Отмена</button>
+            <button class="btn btnPrimary" type="submit" id="submitBtn">Отправить в WhatsApp</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toasts -->
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    (function(){
+      const WHATSAPP_NUMBER = "77479894879"; // +7 747 989 4879 (без +)
+      const WHATSAPP_DISPLAY = "+7 747 989 4879";
+
+      // translations
+      const I18N = {
+        ru: {
+          htmlLang: "ru",
+          brandSubtitle: "IT-компания • e-commerce • web systems",
+          pillText: "Выпускники SDU • опыт 4+ лет",
+          heroTitle: "Интернет-магазины и веб-системы под ключ",
+          heroLead: "Коротко: погружаемся в бизнес → делаем ТЗ → дизайн → разработка.",
+          heroHint: "Сначала обсуждаем боли и решение. Затем ТЗ. После — дизайн и разработка.",
+          btnDiscuss: "Обсудить проект",
+          btnConsult: "Получить консультацию",
+
+          aboutTitle: "О компании",
+          aboutLead: "SHYNGROUP — IT-компания. Делаем e-commerce и сложные системы: CRM/ERP и автоматизацию.",
+
+          processTitle: "Процесс",
+          p1t: "1) Аналитика", p1d: "Боли → цели → решения",
+          p2t: "2) ТЗ", p2d: "Архитектура • функционал • бизнес-логика",
+          p3t: "3) UX/UI", p3d: "Прототип • современный интерфейс • mobile-first",
+          p4t: "4) Разработка", p4d: "Backend + Frontend • интеграции • тестирование • деплой",
+
+          servicesTitle: "Услуги",
+          servicesLead: "Разрабатываем цифровые продукты для роста бизнеса.",
+          s1t: "Интернет-магазины", s1d: "Каталог • корзина • онлайн-оплата • админ-панель",
+          s2t: "CRM системы", s2d: "Продажи • сервис • управление лидами",
+          s3t: "ERP решения", s3d: "Финансы • роли • документы • аналитика",
+          s4t: "Автоматизация процессов", s4d: "Визы • логистика • госзакупки • интеграции",
+          s5t: "Образовательные платформы", s5d: "LMS • кабинеты • тестирование • контент",
+
+          casesTitle: "Кейсы",
+          casesLead: "Крупные карточки + логотип заполняет квадрат целиком.",
+          c1d: "3 проекта • своя CRM • автоматизация виз • CRM для сервис-менеджеров",
+          c2d: "Web-платформа",
+          c3d: "EdTech / контент",
+          c4d: "ERP system",
+          c5t: "Автоматизация логистики и госзакупок",
+          c5d: "Процессы • интеграции • отчеты",
+          c6t: "Образовательные платформы",
+          c6d: "LMS • кабинеты • курсы",
+          plus50Text: "ещё реализованных проектов в разных нишах",
+
+          pricingTitle: "Стоимость и сроки",
+          pricingLead: "Обсуждаются индивидуально после аналитики и формирования ТЗ.",
+          btnMeet: "Запланировать встречу",
+
+          footerLine: `WhatsApp: <b>${WHATSAPP_DISPLAY}</b>`,
+          waLabel: "WhatsApp",
+          emailLabel: "Email",
+          igLabel: "Instagram",
+
+          modalTitle: "Обсудить проект",
+          lblName: "Имя *",
+          lblPhone: "Телефон *",
+          lblCompany: "Компания",
+          lblMsg: "Сообщение *",
+          errName: "Укажите имя.",
+          errPhone: "Укажите телефон.",
+          errMsg: "Добавьте описание.",
+          modalHint: "После отправки откроется WhatsApp — данные будут вставлены автоматически.",
+          cancelBtn: "Отмена",
+          submitBtn: "Отправить в WhatsApp",
+
+          prefillProject: "Хочу обсудить проект. Боль/цель: ",
+          prefillConsult: "Хочу консультацию. Коротко о задаче: ",
+
+          toastOpenTitle: "Открываем WhatsApp",
+          toastOpenText: "Сообщение уже заполнено — нажмите “Отправить”.",
+          toastInvalidTitle: "Проверьте форму",
+          toastInvalidText: "Заполните обязательные поля."
+        },
+
+        kz: {
+          htmlLang: "kk",
+          brandSubtitle: "IT-компания • e-commerce • web systems",
+          pillText: "SDU түлектері • 4+ жыл тәжірибе",
+          heroTitle: "Интернет-дүкендер мен веб-жүйелерді толық жасап береміз",
+          heroLead: "Қысқа: бизнеске кіреміз → ТЗ → дизайн → әзірлеу.",
+          heroHint: "Алдымен ауырсыну нүктелерін талқылаймыз. Сосын ТЗ. Одан кейін — дизайн және әзірлеу.",
+          btnDiscuss: "Жобаны талқылау",
+          btnConsult: "Кеңес алу",
+
+          aboutTitle: "Компания туралы",
+          aboutLead: "SHYNGROUP — IT-компания. E-commerce және күрделі жүйелер: CRM/ERP және автоматтандыру.",
+
+          processTitle: "Процесс",
+          p1t: "1) Аналитика", p1d: "Ауырсыну → мақсат → шешім",
+          p2t: "2) ТЗ", p2d: "Архитектура • функционал • бизнес-логика",
+          p3t: "3) UX/UI", p3d: "Прототип • заманауи интерфейс • mobile-first",
+          p4t: "4) Әзірлеу", p4d: "Backend + Frontend • интеграциялар • тест • деплой",
+
+          servicesTitle: "Қызметтер",
+          servicesLead: "Бизнес өсіміне арналған цифрлық өнімдер жасаймыз.",
+          s1t: "Интернет-дүкендер", s1d: "Каталог • себет • онлайн төлем • админ-панель",
+          s2t: "CRM жүйелері", s2d: "Сату • сервис • лидтерді басқару",
+          s3t: "ERP шешімдері", s3d: "Қаржы • рөлдер • құжаттар • аналитика",
+          s4t: "Процестерді автоматтандыру", s4d: "Виза • логистика • госзакуп • интеграциялар",
+          s5t: "Білім платформалары", s5d: "LMS • кабинет • тест • контент",
+
+          casesTitle: "Кейстер",
+          casesLead: "Үлкен карточкалар + логотип квадратты толық толтырады.",
+          c1d: "3 жоба • өз CRM • визаны автоматтандыру • сервис CRM",
+          c2d: "Web-платформа",
+          c3d: "EdTech / контент",
+          c4d: "ERP system",
+          c5t: "Логистика және госзакуп автоматтандыру",
+          c5d: "Процестер • интеграциялар • есептер",
+          c6t: "Білім платформалары",
+          c6d: "LMS • кабинет • курстар",
+          plus50Text: "әр түрлі нишада тағы 50+ жоба",
+
+          pricingTitle: "Баға және мерзім",
+          pricingLead: "Аналитика және ТЗ-дан кейін жеке талқыланады.",
+          btnMeet: "Кездесу жоспарлау",
+
+          footerLine: `WhatsApp: <b>${WHATSAPP_DISPLAY}</b>`,
+          waLabel: "WhatsApp",
+          emailLabel: "Email",
+          igLabel: "Instagram",
+
+          modalTitle: "Жобаны талқылау",
+          lblName: "Атыңыз *",
+          lblPhone: "Телефон *",
+          lblCompany: "Компания",
+          lblMsg: "Хабарлама *",
+          errName: "Атыңызды жазыңыз.",
+          errPhone: "Телефонды жазыңыз.",
+          errMsg: "Қысқаша сипаттаңыз.",
+          modalHint: "Жібергеннен кейін WhatsApp ашылады — мәтін автоматты толтырылады.",
+          cancelBtn: "Бас тарту",
+          submitBtn: "WhatsApp-қа жіберу",
+
+          prefillProject: "Жобаны талқылағым келеді. Мақсат/ауру: ",
+          prefillConsult: "Кеңес керек. Қысқаша: ",
+
+          toastOpenTitle: "WhatsApp ашылады",
+          toastOpenText: "Мәтін дайын — “Жіберу” басыңыз.",
+          toastInvalidTitle: "Форманы тексеріңіз",
+          toastInvalidText: "Міндетті өрістерді толтырыңыз."
+        },
+
+        en: {
+          htmlLang: "en",
+          brandSubtitle: "IT company • e-commerce • web systems",
+          pillText: "SDU graduates • 4+ years experience",
+          heroTitle: "E-commerce stores & web systems — turnkey delivery",
+          heroLead: "Short: business discovery → spec → design → development.",
+          heroHint: "First we discuss your pains and solution. Then specs. After that — design and development.",
+          btnDiscuss: "Discuss a project",
+          btnConsult: "Get консультация",
+
+          aboutTitle: "About",
+          aboutLead: "SHYNGROUP is an IT company. We build e-commerce and complex systems: CRM/ERP and automation.",
+
+          processTitle: "Process",
+          p1t: "1) Discovery", p1d: "Pain → goals → solution",
+          p2t: "2) Specification", p2d: "Architecture • features • business logic",
+          p3t: "3) UX/UI", p3d: "Prototype • modern UI • mobile-first",
+          p4t: "4) Development", p4d: "Backend + Frontend • integrations • QA • deploy",
+
+          servicesTitle: "Services",
+          servicesLead: "We build digital products that grow your business.",
+          s1t: "Online stores", s1d: "Catalog • cart • payments • admin panel",
+          s2t: "CRM systems", s2d: "Sales • support • lead management",
+          s3t: "ERP solutions", s3d: "Finance • roles • docs • analytics",
+          s4t: "Business automation", s4d: "Visa • logistics • procurement • integrations",
+          s5t: "Education platforms", s5d: "LMS • accounts • tests • content",
+
+          casesTitle: "Cases",
+          casesLead: "Large cards + square logo fully filled.",
+          c1d: "3 projects • own CRM • visa automation • service CRM",
+          c2d: "Web platform",
+          c3d: "EdTech / content",
+          c4d: "ERP system",
+          c5t: "Logistics & procurement automation",
+          c5d: "Processes • integrations • reports",
+          c6t: "Education platforms",
+          c6d: "LMS • accounts • courses",
+          plus50Text: "+50 more delivered projects across niches",
+
+          pricingTitle: "Timeline & pricing",
+          pricingLead: "Estimated individually after discovery and specification.",
+          btnMeet: "Schedule a call",
+
+          footerLine: `WhatsApp: <b>${WHATSAPP_DISPLAY}</b>`,
+          waLabel: "WhatsApp",
+          emailLabel: "Email",
+          igLabel: "Instagram",
+
+          modalTitle: "Discuss a project",
+          lblName: "Name *",
+          lblPhone: "Phone *",
+          lblCompany: "Company",
+          lblMsg: "Message *",
+          errName: "Please enter your name.",
+          errPhone: "Please enter your phone.",
+          errMsg: "Please add a short message.",
+          modalHint: "After submit, WhatsApp will open with prefilled text.",
+          cancelBtn: "Cancel",
+          submitBtn: "Send to WhatsApp",
+
+          prefillProject: "I want to discuss a project. Goal/pain: ",
+          prefillConsult: "I want a consultation. Brief: ",
+
+          toastOpenTitle: "Opening WhatsApp",
+          toastOpenText: "Message is ready — press “Send”.",
+          toastInvalidTitle: "Check the form",
+          toastInvalidText: "Fill in required fields."
+        }
+      };
+
+      // set year
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // footer WhatsApp link
+      const waFooter = document.getElementById('waLinkFooter');
+      if (waFooter) {
+        const hello = encodeURIComponent("Здравствуйте! Хочу обсудить проект в SHYNGROUP.");
+        waFooter.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${hello}`;
+        waFooter.setAttribute("aria-label", `WhatsApp ${WHATSAPP_DISPLAY}`);
+      }
+
+      // reveal
+      const els = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          if(en.isIntersecting){
+            en.target.classList.add('in');
+            io.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+      els.forEach(el => io.observe(el));
+
+      // modal
+      const backdrop = document.getElementById('backdrop');
+      const closeBtn = document.getElementById('closeBtn');
+      const cancelBtn = document.getElementById('cancelBtn');
+      const openBtns = document.querySelectorAll('[data-open-modal]');
+      const form = document.getElementById('leadForm');
+
+      const nameEl = document.getElementById('name');
+      const phoneEl = document.getElementById('phone');
+      const companyEl = document.getElementById('company');
+      const msgEl = document.getElementById('message');
+
+      let currentLang = localStorage.getItem('shyngroup_lang') || 'ru';
+      if (!I18N[currentLang]) currentLang = 'ru';
+
+      // update placeholders per language
+      function updatePlaceholders(lang){
+        if(lang === 'ru'){
+          nameEl.placeholder = "Ваше имя";
+          phoneEl.placeholder = "+7 (___) ___-__-__";
+          companyEl.placeholder = "Название (опционально)";
+          msgEl.placeholder = "Коротко о задаче";
+        } else if(lang === 'kz'){
+          nameEl.placeholder = "Атыңыз";
+          phoneEl.placeholder = "+7 (___) ___-__-__";
+          companyEl.placeholder = "Атауы (қалауыңызша)";
+          msgEl.placeholder = "Қысқаша сипаттаңыз";
+        } else {
+          nameEl.placeholder = "Your name";
+          phoneEl.placeholder = "+7 (___) ___-__-__";
+          companyEl.placeholder = "Company (optional)";
+          msgEl.placeholder = "Short message";
+        }
+      }
+
+      function setLang(lang){
+        currentLang = lang;
+        localStorage.setItem('shyngroup_lang', lang);
+
+        const t = I18N[lang];
+        document.documentElement.lang = t.htmlLang;
+
+        // top
+        document.getElementById('brandSubtitle').textContent = t.brandSubtitle;
+
+        // hero
+        document.getElementById('pillText').lastChild.nodeValue = " " + t.pillText; // keep icon
+        document.getElementById('heroTitle').textContent = t.heroTitle;
+        document.getElementById('heroLead').textContent = t.heroLead;
+        document.getElementById('heroHint').textContent = t.heroHint;
+        document.getElementById('btnDiscuss').textContent = t.btnDiscuss;
+        document.getElementById('btnConsult').textContent = t.btnConsult;
+
+        // about
+        document.getElementById('aboutTitle').textContent = t.aboutTitle;
+        document.getElementById('aboutLead').textContent = t.aboutLead;
+
+        // process
+        document.getElementById('processTitle').textContent = t.processTitle;
+        document.getElementById('p1t').textContent = t.p1t; document.getElementById('p1d').textContent = t.p1d;
+        document.getElementById('p2t').textContent = t.p2t; document.getElementById('p2d').textContent = t.p2d;
+        document.getElementById('p3t').textContent = t.p3t; document.getElementById('p3d').textContent = t.p3d;
+        document.getElementById('p4t').textContent = t.p4t; document.getElementById('p4d').textContent = t.p4d;
+
+        // services
+        document.getElementById('servicesTitle').textContent = t.servicesTitle;
+        document.getElementById('servicesLead').textContent = t.servicesLead;
+        document.getElementById('s1t').textContent = t.s1t; document.getElementById('s1d').textContent = t.s1d;
+        document.getElementById('s2t').textContent = t.s2t; document.getElementById('s2d').textContent = t.s2d;
+        document.getElementById('s3t').textContent = t.s3t; document.getElementById('s3d').textContent = t.s3d;
+        document.getElementById('s4t').textContent = t.s4t; document.getElementById('s4d').textContent = t.s4d;
+        document.getElementById('s5t').textContent = t.s5t; document.getElementById('s5d').textContent = t.s5d;
+
+        // cases
+        document.getElementById('casesTitle').textContent = t.casesTitle;
+        document.getElementById('casesLead').textContent = t.casesLead;
+        document.getElementById('c1d').textContent = t.c1d;
+        document.getElementById('c2d').textContent = t.c2d;
+        document.getElementById('c3d').textContent = t.c3d;
+        document.getElementById('c4d').textContent = t.c4d;
+        document.getElementById('c5t').textContent = t.c5t;
+        document.getElementById('c5d').textContent = t.c5d;
+        document.getElementById('c6t').textContent = t.c6t;
+        document.getElementById('c6d').textContent = t.c6d;
+        document.getElementById('plus50Text').textContent = t.plus50Text;
+
+        // pricing
+        document.getElementById('pricingTitle').textContent = t.pricingTitle;
+        document.getElementById('pricingLead').textContent = t.pricingLead;
+        document.getElementById('btnMeet').textContent = t.btnMeet;
+
+        // footer labels
+        document.getElementById('footerLine').innerHTML = t.footerLine;
+        document.getElementById('waLabel').textContent = t.waLabel;
+        document.getElementById('emailLabel').textContent = t.emailLabel;
+        document.getElementById('igLabel').textContent = t.igLabel;
+
+        // modal labels
+        document.getElementById('modalTitle').textContent = t.modalTitle;
+        document.getElementById('lblName').textContent = t.lblName;
+        document.getElementById('lblPhone').textContent = t.lblPhone;
+        document.getElementById('lblCompany').textContent = t.lblCompany;
+        document.getElementById('lblMsg').textContent = t.lblMsg;
+        document.getElementById('errName').textContent = t.errName;
+        document.getElementById('errPhone').textContent = t.errPhone;
+        document.getElementById('errMsg').textContent = t.errMsg;
+        document.getElementById('modalHint').textContent = t.modalHint;
+        document.getElementById('cancelBtn').textContent = t.cancelBtn;
+        document.getElementById('submitBtn').textContent = t.submitBtn;
+
+        updatePlaceholders(lang);
+
+        // segmented active state
+        document.querySelectorAll('.seg button').forEach(b => {
+          const active = b.getAttribute('data-lang') === lang;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+      }
+
+      function openModal(prefill){
+        backdrop.style.display = 'block';
+        backdrop.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => nameEl.focus(), 50);
+
+        const t = I18N[currentLang];
+        if(prefill === 'consult'){
+          msgEl.value = t.prefillConsult;
+        } else if(prefill === 'project'){
+          msgEl.value = t.prefillProject;
+        }
+      }
+      function closeModal(){
+        backdrop.style.display = 'none';
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      openBtns.forEach(btn => btn.addEventListener('click', () => openModal(btn.getAttribute('data-prefill'))));
+      closeBtn.addEventListener('click', closeModal);
+      cancelBtn.addEventListener('click', closeModal);
+      backdrop.addEventListener('click', (e) => { if(e.target === backdrop) closeModal(); });
+      document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && backdrop.style.display === 'block') closeModal(); });
+
+      // phone format (RU/KZ/EN same)
+      phoneEl.addEventListener('input', () => {
+        let v = phoneEl.value.replace(/[^\d+]/g,'');
+        if(v.startsWith('8')) v = '+7' + v.slice(1);
+        if(!v.startsWith('+')) v = '+' + v.replace(/\+/g,'');
+        const digits = v.replace(/\D/g,'');
+        if(digits.startsWith('7')){
+          const d = digits.slice(1, 11);
+          let out = '+7';
+          if(d.length>0) out += ' (' + d.slice(0,3);
+          if(d.length>=3) out += ')';
+          if(d.length>3) out += ' ' + d.slice(3,6);
+          if(d.length>6) out += '-' + d.slice(6,8);
+          if(d.length>8) out += '-' + d.slice(8,10);
+          phoneEl.value = out;
+        }
+      });
+
+      // toast
+      const toasts = document.getElementById('toasts');
+      function escapeHtml(str){
+        return String(str)
+          .replaceAll('&','&amp;')
+          .replaceAll('<','&lt;')
+          .replaceAll('>','&gt;')
+          .replaceAll('"','&quot;')
+          .replaceAll("'","&#039;");
+      }
+      function showToast(title, text){
+        const el = document.createElement('div');
+        el.className = 'toast';
+        el.innerHTML = `
+          <div class="ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" style="width:18px;height:18px">
+              <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <b>${escapeHtml(title)}</b>
+            <p>${escapeHtml(text)}</p>
+          </div>
+        `;
+        toasts.appendChild(el);
+        setTimeout(() => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(6px)';
+          el.style.transition = 'opacity .25s var(--ease), transform .25s var(--ease)';
+        }, 2400);
+        setTimeout(() => el.remove(), 2750);
+      }
+
+      // validation
+      function setErr(fieldName, show){
+        const err = document.querySelector(`[data-err="${fieldName}"]`);
+        if(!err) return;
+        err.style.display = show ? 'block' : 'none';
+      }
+      function validate(){
+        let ok = true;
+        const name = nameEl.value.trim();
+        const phone = phoneEl.value.trim();
+        const msg = msgEl.value.trim();
+
+        if(!name){ ok=false; setErr('name', true); } else setErr('name', false);
+        if(!phone || phone.replace(/\D/g,'').length < 10){ ok=false; setErr('phone', true); } else setErr('phone', false);
+        if(!msg){ ok=false; setErr('message', true); } else setErr('message', false);
+
+        return ok;
+      }
+
+      // build whatsapp message
+      function buildWhatsAppText(payload){
+        const t = I18N[currentLang];
+        const labels = {
+          ru: { header: "Заявка с лендинга SHYNGROUP", name:"Имя", phone:"Телефон", company:"Компания", msg:"Сообщение", date:"Дата" },
+          kz: { header: "SHYNGROUP лендингінен өтінім", name:"Аты", phone:"Телефон", company:"Компания", msg:"Хабарлама", date:"Күні" },
+          en: { header: "Lead from SHYNGROUP landing", name:"Name", phone:"Phone", company:"Company", msg:"Message", date:"Date" }
+        }[currentLang] || { header: "Lead from SHYNGROUP", name:"Name", phone:"Phone", company:"Company", msg:"Message", date:"Date" };
+
+        const lines = [
+          labels.header,
+          "",
+          `${labels.name}: ${payload.name || "-"}`,
+          `${labels.phone}: ${payload.phone || "-"}`,
+          `${labels.company}: ${payload.company || "-"}`,
+          `${labels.msg}: ${payload.message || "-"}`,
+          "",
+          `${labels.date}: ${new Date().toLocaleString(currentLang === 'kz' ? 'kk-KZ' : (currentLang === 'ru' ? 'ru-RU' : 'en-US'))}`
+        ];
+        return lines.join("\n");
+      }
+
+      // form submit => open whatsapp
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const t = I18N[currentLang];
+
+        if(!validate()){
+          showToast(t.toastInvalidTitle, t.toastInvalidText);
+          return;
+        }
+
+        const payload = {
+          name: nameEl.value.trim(),
+          phone: phoneEl.value.trim(),
+          company: companyEl.value.trim(),
+          message: msgEl.value.trim(),
+          ts: new Date().toISOString()
+        };
+
+        // demo storage (optional)
+        try{
+          const key = 'shyngroup_leads_demo';
+          const prev = JSON.parse(localStorage.getItem(key) || '[]');
+          prev.push(payload);
+          localStorage.setItem(key, JSON.stringify(prev));
+        }catch(_){}
+
+        const text = buildWhatsAppText(payload);
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+
+        closeModal();
+        showToast(t.toastOpenTitle, t.toastOpenText);
+
+        setTimeout(() => {
+          window.open(url, "_blank", "noopener");
+        }, 50);
+
+        form.reset();
+        setErr('name', false); setErr('phone', false); setErr('message', false);
+      });
+
+      // language buttons
+      document.querySelectorAll('.seg button').forEach(btn => {
+        btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
+      });
+
+      // init
+      setLang(currentLang);
+    })();
+  </script>
+</body>
+</html>
